@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenador Kegel Personal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Alineado arriba para caber todo */
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-wrapper {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .container, .calendar-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 350px;
+        }
+
+        /* --- Estilos del Entrenador --- */
+        h1, h2 { color: #2c3e50; margin-bottom: 20px; margin-top: 0; }
+        
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .visual-cue {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            margin: 20px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+            transition: all 0.5s ease;
+        }
+
+        .contracting {
+            background-color: #ff6b6b;
+            color: white;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+        }
+
+        .relaxing {
+            background-color: #4ecdc4;
+            color: white;
+            transform: scale(1.0);
+        }
+
+        .status-text { font-size: 24px; font-weight: bold; margin-bottom: 10px; min-height: 30px; }
+        .sub-text { color: #7f8c8d; margin-bottom: 20px; }
+
+        button {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        button:hover { background-color: #34495e; }
+        .stop-btn { background-color: #e74c3c; display: none; }
+        .stop-btn:hover { background-color: #c0392b; }
+
+        /* --- Estilos del Calendario --- */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .calendar-day-name {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .calendar-day {
+            padding: 8px 0;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #f9f9f9;
+        }
+
+        .calendar-day.today {
+            border: 2px solid #2c3e50;
+        }
+
+        .calendar-day.completed {
+            background-color: #4ecdc4;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .calendar-day.empty { background: none; }
+
+        .stats {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .clear-data {
+            font-size: 12px;
+            color: #e74c3c;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>Entrenador Kegel</h1>
+            
+            <label for="level-select">Selecciona tu nivel:</label>
+            <select id="level-select">
+                <option value="beginner">Principiante (3s / 5s - 5 reps)</option>
+                <option value="intermediate">Intermedio (5s / 5s - 10 reps)</option>
+                <option value="expert">Experto (10s / 10s - 15 reps)</option>
+            </select>
+
+            <div id="visual-circle" class="visual-cue">0</div>
+
+            <div id="status-display" class="status-text">Listo</div>
+            <div id="rep-display" class="sub-text">Repeticiones: 0 / 0</div>
+
+            <button id="start-btn" onclick="startWorkout()">Comenzar</button>
+            <button id="stop-btn" class="stop-btn" onclick="stopWorkout()">Detener</button>
+        </div>
+
+        <div class="calendar-container">
+            <h2>Mi Progreso</h2>
+            <div class="calendar-header">
+                <span id="month-year"></span>
+            </div>
+            
+            <div class="calendar-grid">
+                <div class="calendar-day-name">Lu</div>
+                <div class="calendar-day-name">Ma</div>
+                <div class="calendar-day-name">Mi</div>
+                <div class="calendar-day-name">Ju</div>
+                <div class="calendar-day-name">Vi</div>
+                <div class="calendar-day-name">Sa</div>
+                <div class="calendar-day-name">Do</div>
+            </div>
+
+            <div id="calendar-days" class="calendar-grid">
+                </div>
+
+            <div class="stats">
+                Sesiones totales: <span id="total-sessions">0</span>
+            </div>
+            <span class="clear-data" onclick="clearData()">Borrar historial</span>
+        </div>
+    </div>
+
+    <script>
+        // --- LOGICA DE EJERCICIOS ---
+        const levels = {
+            beginner: { contract: 3, relax: 5, reps: 5 },
+            intermediate: { contract: 5, relax: 5, reps: 10 },
+            expert: { contract: 10, relax: 10, reps: 15 }
+        };
+
+        let interval;
+        let isRunning = false;
+        let audioCtx;
+
+        function playTone(freq, type = 'sine', duration = 0.2) {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.value = freq;
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+            osc.stop(audioCtx.currentTime + duration);
+        }
+
+        function startWorkout() {
+            if (isRunning) return;
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+            const levelKey = document.getElementById('level-select').value;
+            const config = levels[levelKey];
+            let currentRep = 1;
+            let phase = 'prepare';
+            let timeLeft = 3;
+
+            isRunning = true;
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('stop-btn').style.display = 'inline-block';
+            document.getElementById('level-select').disabled = true;
+
+            updateUI('Prepárate', timeLeft, currentRep, config.reps, '');
+
+            interval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft < 0) {
+                    if (phase === 'prepare' || phase === 'relax') {
+                        if (currentRep > config.reps) {
+                            finishWorkout(levelKey); // Pasamos el nivel completado
+                            return;
+                        }
+                        phase = 'contract';
+                        timeLeft = config.contract;
+                        playTone(600, 'sine', 0.5);
+                        updateUI('¡APRIETA!', timeLeft, currentRep, config.reps, 'contracting');
+                    } else if (phase === 'contract') {
+                        phase = 'relax';
+                        timeLeft = config.relax;
+                        currentRep++;
+                        playTone(300, 'sine', 0.5);
+                        updateUI('Relaja...', timeLeft, Math.min(currentRep, config.reps), config.reps, 'relaxing');
+                    }
+                } else {
+                    let visualClass = phase === 'contract' ? 'contracting' : (phase === 'relax' ? 'relaxing' : '');
+                    updateUI(
+                        phase === 'contract' ? '¡APRIETA!' : (phase === 'relax' ? 'Relaja...' : 'Prepárate'), 
+                        timeLeft, 
+                        (phase === 'relax' && timeLeft === config.relax) ? currentRep -1 : currentRep, 
+                        config.reps, 
+                        visualClass
+                    );
+                }
+            }, 1000);
+        }
+
+        function updateUI(status, time, rep, totalReps, visualClass) {
+            document.getElementById('status-display').innerText = status;
+            document.getElementById('visual-circle').innerText = time;
+            document.getElementById('rep-display').innerText = `Repetición: ${Math.min(rep, totalReps)} / ${totalReps}`;
+            document.getElementById('visual-circle').className = 'visual-cue ' + visualClass;
+        }
+
+        function stopWorkout() {
+            clearInterval(interval);
+            isRunning = false;
+            resetUI();
+        }
+
+        function finishWorkout(levelKey) {
+            stopWorkout();
+            playTone(800, 'triangle', 0.1);
+            setTimeout(() => playTone(800, 'triangle', 0.1), 150);
+            playTone(1200, 'triangle', 0.4);
+            document.getElementById('status-display').innerText = "¡Entrenamiento Completado!";
+            document.getElementById('visual-circle').innerText = "✔";
+            
+            // Guardar sesión
+            saveSession(levelKey);
+        }
+
+        function resetUI() {
+            document.getElementById('start-btn').style.display = 'inline-block';
+            document.getElementById('stop-btn').style.display = 'none';
+            document.getElementById('level-select').disabled = false;
+            document.getElementById('status-display').innerText = "Listo";
+            document.getElementById('visual-circle').innerText = "0";
+            document.getElementById('visual-circle').className = 'visual-cue';
+            document.getElementById('rep-display').innerText = "Repeticiones: 0 / 0";
+        }
+
+        // --- LOGICA DE CALENDARIO Y PERSISTENCIA ---
+        
+        // Obtenemos los datos guardados o iniciamos vacío
+        function getHistory() {
+            const data = localStorage.getItem('kegelHistory');
+            return data ? JSON.parse(data) : {};
+        }
+
+        function saveSession(level) {
+            const history = getHistory();
+            const today = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
+            
+            if (!history[today]) {
+                history[today] = [];
+            }
+            history[today].push(level);
+            
+            localStorage.setItem('kegelHistory', JSON.stringify(history));
+            renderCalendar(); // Actualizar calendario
+        }
+
+        function renderCalendar() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = date.getMonth(); // 0-11
+            const todayStr = date.toISOString().split('T')[0];
+            
+            // Nombres de meses
+            const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+            ];
+            
+            document.getElementById('month-year').innerText = `${monthNames[month]} ${year}`;
+
+            const daysContainer = document.getElementById('calendar-days');
+            daysContainer.innerHTML = '';
+
+            const history = getHistory();
+            
+            // Total de sesiones
+            let total = 0;
+            Object.values(history).forEach(day => total += day.length);
+            document.getElementById('total-sessions').innerText = total;
+
+            // Calcular primer día de la semana y días totales
+            const firstDay = new Date(year, month, 1).getDay(); // 0 (Domingo) - 6 (Sábado)
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Ajuste para empezar en Lunes (Lunes=0, Domingo=6 en nuestra lógica visual)
+            let startOffset = firstDay === 0 ? 6 : firstDay - 1;
+
+            // Rellenar espacios vacíos al principio
+            for (let i = 0; i < startOffset; i++) {
+                const emptyDiv = document.createElement('div');
+                emptyDiv.classList.add('calendar-day', 'empty');
+                daysContainer.appendChild(emptyDiv);
+            }
+
+            // Rellenar días
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.classList.add('calendar-day');
+                dayDiv.innerText = day;
+
+                // Crear string de fecha para comparar (YYYY-MM-DD)
+                // Cuidado con el timezone, forma segura local:
+                const currentD = new Date(year, month, day);
+                // Truco para formatear localmente a YYYY-MM-DD sin saltos de zona horaria
+                const checkDate = new Date(currentD.getTime() - (currentD.getTimezoneOffset() * 60000))
+                                    .toISOString().split('T')[0];
+
+                // Marcar si es hoy
+                if (checkDate === todayStr) {
+                    dayDiv.classList.add('today');
+                }
+
+                // Marcar si hay datos
+                if (history[checkDate]) {
+                    dayDiv.classList.add('completed');
+                    dayDiv.title = `Sesiones: ${history[checkDate].length}`;
+                }
+
+                daysContainer.appendChild(dayDiv);
+            }
+        }
+
+        function clearData() {
+            if(confirm("¿Seguro que quieres borrar todo el historial?")) {
+                localStorage.removeItem('kegelHistory');
+                renderCalendar();
+            }
+        }
+
+        // Iniciar calendario al cargar
+        renderCalendar();
+
+    </script>
+</body>
+</html>
