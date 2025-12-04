@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrenador Kegel Personal</title>
+    <title>Entrenador Kegel Pro</title>
     <style>
         :root {
             --primary: #2c3e50;
             --secondary: #4ecdc4;
-            --danger: #e74c3c;
-            --danger-dark: #c0392b;
+            --accent: #ff6b6b;
             --light: #f0f4f8;
             --text: #333;
         }
@@ -47,78 +46,112 @@
             max-width: 400px;
         }
 
-        /* --- Estilos del Entrenador --- */
-        h1, h2, h3 { color: var(--primary); margin-bottom: 20px; margin-top: 0; }
+        /* --- Tipografía y UI --- */
+        h1 { color: var(--primary); margin-bottom: 5px; margin-top: 0; font-size: 28px;}
+        h2 { font-size: 18px; color: #7f8c8d; margin-bottom: 25px; font-weight: normal; }
+        h3 { color: var(--primary); margin-top: 0; }
         
+        /* Select mejorado */
+        .select-wrapper {
+            position: relative;
+            margin-bottom: 15px;
+        }
         select {
-            padding: 10px;
+            padding: 12px;
             font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
             width: 100%;
-            margin-bottom: 20px;
             background: white;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        select:focus { border-color: var(--secondary); outline: none; }
+
+        .level-desc {
+            font-size: 13px;
+            color: #666;
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary);
+            text-align: left;
+            line-height: 1.4;
         }
 
+        /* --- Circulo Visual --- */
         .visual-cue {
-            width: 150px;
-            height: 150px;
+            width: 160px;
+            height: 160px;
             border-radius: 50%;
-            background-color: #e0e0e0;
+            background-color: #ecf0f1;
             margin: 20px auto;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
+            font-size: 48px;
             font-weight: bold;
-            transition: all 0.5s ease;
+            color: #bdc3c7;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .contracting {
-            background-color: #ff6b6b;
+            background-color: var(--accent);
             color: white;
             transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
         }
 
         .relaxing {
             background-color: var(--secondary);
             color: white;
             transform: scale(1.0);
+            border-color: white;
         }
 
-        .status-text { font-size: 24px; font-weight: bold; margin-bottom: 10px; min-height: 30px; }
-        .sub-text { color: #7f8c8d; margin-bottom: 20px; }
+        .status-text { font-size: 26px; font-weight: 800; margin-bottom: 5px; min-height: 35px; color: var(--primary); }
+        .sub-text { color: #95a5a6; margin-bottom: 25px; font-weight: 500;}
 
+        /* --- Botones --- */
         button {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 12px 30px;
+            padding: 15px 30px;
             font-size: 16px;
             font-weight: bold;
-            border-radius: 50px;
+            border-radius: 12px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.1s;
+            transition: all 0.2s;
             width: 100%;
             margin-bottom: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        button:hover { background-color: #34495e; }
-        button:active { transform: scale(0.98); }
+        button:hover { background-color: #34495e; transform: translateY(-2px); }
+        button:active { transform: translateY(0); }
         
-        .stop-btn { background-color: var(--danger); display: none; }
-        .stop-btn:hover { background-color: var(--danger-dark); }
+        .stop-btn { background-color: var(--accent); display: none; }
+        .stop-btn:hover { background-color: #d63031; }
 
         .delete-btn {
-            background-color: var(--danger);
+            background-color: white;
+            color: #e74c3c;
+            border: 2px solid #e74c3c;
             margin-top: 20px;
+            padding: 8px 20px;
             font-size: 14px;
-            padding: 10px 20px;
+            box-shadow: none;
         }
-        .delete-btn:hover { background-color: var(--danger-dark); }
+        .delete-btn:hover { background-color: #fff5f5; color: #c0392b; border-color: #c0392b; transform: none;}
 
-        /* --- Estilos del Calendario --- */
+        /* --- Calendario y Gráfica --- */
         .calendar-header {
             display: flex;
             justify-content: space-between;
@@ -131,21 +164,25 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            gap: 6px;
             text-align: center;
         }
 
-        .calendar-day-name { font-size: 12px; color: #7f8c8d; margin-bottom: 5px; }
+        .calendar-day-name { font-size: 11px; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px;}
 
         .calendar-day {
-            padding: 8px 0;
-            border-radius: 5px;
-            font-size: 14px;
-            background-color: #f9f9f9;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 13px;
+            background-color: #f8f9fa;
             position: relative;
+            font-weight: 500;
         }
 
-        .calendar-day.today { border: 2px solid var(--primary); font-weight: bold;}
+        .calendar-day.today { border: 2px solid var(--primary); color: var(--primary); font-weight: bold;}
         
         .calendar-day.completed {
             background-color: var(--secondary);
@@ -153,102 +190,44 @@
             cursor: pointer;
         }
         
-        .calendar-day.completed:hover { opacity: 0.8; }
+        .calendar-day.completed:hover { opacity: 0.9; transform: scale(1.05); transition: 0.2s; }
         .calendar-day.empty { background: none; }
 
-        /* Indicador de múltiples sesiones (puntito) */
         .dot {
-            height: 4px;
-            width: 4px;
-            background-color: white;
-            border-radius: 50%;
-            display: inline-block;
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            transform: translateX(-50%);
+            height: 4px; width: 4px; background-color: white; border-radius: 50%;
+            position: absolute; bottom: 4px;
         }
 
-        .stats {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #7f8c8d;
-            border-top: 1px solid #eee;
-            padding-top: 10px;
-        }
-
-        /* --- Gráfica SVG --- */
         .chart-container {
             margin-top: 30px;
             border-top: 1px solid #eee;
             padding-top: 20px;
         }
-        
-        .chart-svg {
-            width: 100%;
-            height: 150px;
-            background-color: #fdfdfd;
-            border-radius: 10px;
-        }
-        
-        .bar { fill: var(--secondary); rx: 4; transition: height 0.5s ease; }
+        .chart-svg { width: 100%; height: 120px; background-color: transparent; }
+        .bar { fill: var(--secondary); rx: 3; transition: height 0.6s ease; }
         .bar:hover { fill: var(--primary); }
-        .bar-text { font-size: 10px; fill: #7f8c8d; text-anchor: middle; }
+        .bar-text { font-size: 10px; fill: #95a5a6; text-anchor: middle; }
 
-        /* --- Popup Modal --- */
+        /* --- Modal --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(2px);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(44, 62, 80, 0.6);
+            display: none; justify-content: center; align-items: center;
+            z-index: 1000; backdrop-filter: blur(4px);
         }
 
         .modal-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 350px;
-            text-align: left;
-            position: relative;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            background: white; padding: 25px; border-radius: 16px;
+            width: 90%; max-width: 320px; text-align: left;
+            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             animation: slideUp 0.3s ease;
         }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }}
 
-        @keyframes slideUp {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px; right: 15px;
-            font-size: 24px;
-            cursor: pointer;
-            color: #aaa;
-            line-height: 1;
-        }
-        .close-modal:hover { color: #333; }
-
-        .session-item {
-            border-bottom: 1px solid #eee;
-            padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
-        }
+        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; color: #ccc; }
+        .session-item { border-bottom: 1px solid #f1f1f1; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
         .session-item:last-child { border-bottom: none; }
-        .level-badge {
-            font-size: 12px;
-            padding: 3px 8px;
-            border-radius: 10px;
-            background: #eee;
-            color: #555;
-        }
+        .level-badge { font-size: 11px; padding: 4px 8px; border-radius: 12px; background: #f1f1f1; color: #555; font-weight: 600; text-transform: uppercase; }
 
     </style>
 </head>
@@ -257,25 +236,32 @@
     <div class="main-wrapper">
         <div class="container">
             <h1>Entrenador Kegel</h1>
+            <h2>Fortalecimiento Pélvico</h2>
             
-            <label for="level-select">Selecciona tu nivel:</label>
-            <select id="level-select">
-                <option value="beginner">Principiante (3s / 5s - 5 reps)</option>
-                <option value="intermediate">Intermedio (5s / 5s - 10 reps)</option>
-                <option value="expert">Experto (10s / 10s - 15 reps)</option>
-            </select>
+            <div class="select-wrapper">
+                <select id="level-select" onchange="updateDescription()">
+                    <option value="initiation">Nivel 1: Iniciación (Aprender)</option>
+                    <option value="endurance1">Nivel 2: Resistencia Base</option>
+                    <option value="endurance2">Nivel 3: Resistencia Avanzada</option>
+                    <option value="quick">Nivel 4: Fibras Rápidas</option>
+                    <option value="pro">Nivel 5: Desafío Pro</option>
+                </select>
+            </div>
+            
+            <div id="level-desc" class="level-desc">
+                </div>
 
             <div id="visual-circle" class="visual-cue">0</div>
 
             <div id="status-display" class="status-text">Listo</div>
-            <div id="rep-display" class="sub-text">Repeticiones: 0 / 0</div>
+            <div id="rep-display" class="sub-text">0 / 0</div>
 
-            <button id="start-btn" onclick="startWorkout()">Comenzar</button>
+            <button id="start-btn" onclick="startWorkout()">Comenzar Sesión</button>
             <button id="stop-btn" class="stop-btn" onclick="stopWorkout()">Detener</button>
         </div>
 
         <div class="calendar-container">
-            <h2>Mi Progreso</h2>
+            <h3>Mi Progreso</h3>
             <div class="calendar-header">
                 <span id="month-year"></span>
             </div>
@@ -290,43 +276,65 @@
                 <div class="calendar-day-name">Do</div>
             </div>
 
-            <div id="calendar-days" class="calendar-grid">
-                </div>
-
-            <div class="stats">
-                Sesiones totales: <span id="total-sessions">0</span>
-            </div>
+            <div id="calendar-days" class="calendar-grid"></div>
 
             <div class="chart-container">
-                <h3>Últimos 14 días</h3>
-                <svg id="activity-chart" class="chart-svg" viewBox="0 0 300 150">
-                    </svg>
+                <svg id="activity-chart" class="chart-svg" viewBox="0 0 300 130"></svg>
             </div>
 
-            <button class="delete-btn" onclick="clearData()">Borrar Historial</button>
+            <button class="delete-btn" onclick="clearData()">Reiniciar Historial</button>
         </div>
     </div>
 
     <div id="day-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModalButton()">×</span>
-            <h3 id="modal-date">Fecha</h3>
-            <div id="modal-sessions">
-                </div>
+            <h3 id="modal-date" style="margin-bottom:15px">Fecha</h3>
+            <div id="modal-sessions"></div>
         </div>
     </div>
 
     <script>
-        // --- LOGICA DE EJERCICIOS ---
+        // --- LOGICA DE EJERCICIOS ACTUALIZADA ---
         const levels = {
-            beginner: { name: "Principiante", contract: 3, relax: 5, reps: 5 },
-            intermediate: { name: "Intermedio", contract: 5, relax: 5, reps: 10 },
-            expert: { name: "Experto", contract: 10, relax: 10, reps: 15 }
+            initiation: { 
+                name: "Iniciación", 
+                contract: 3, relax: 5, reps: 8, 
+                desc: "Ideal para empezar. Contracciones cortas para localizar el músculo sin fatiga." 
+            },
+            endurance1: { 
+                name: "Resistencia I", 
+                contract: 5, relax: 5, reps: 10, 
+                desc: "El estándar de oro. 5 segundos de tensión y 5 de descanso. Construye base muscular." 
+            },
+            endurance2: { 
+                name: "Resistencia II", 
+                contract: 10, relax: 10, reps: 10, 
+                desc: "Objetivo médico. Aguantar 10 segundos es signo de un suelo pélvico funcional y fuerte." 
+            },
+            quick: { 
+                name: "Fibras Rápidas", 
+                contract: 2, relax: 2, reps: 15, 
+                desc: "Contracciones explosivas de 2s. Mejora la reacción ante tos o estornudos." 
+            },
+            pro: { 
+                name: "Desafío Pro", 
+                contract: 10, relax: 5, reps: 12, 
+                desc: "Alta intensidad. 10s de trabajo con solo 5s de recuperación. Solo para expertos." 
+            }
         };
 
         let interval;
         let isRunning = false;
         let audioCtx;
+
+        function updateDescription() {
+            const val = document.getElementById('level-select').value;
+            document.getElementById('level-desc').innerText = levels[val].desc;
+        }
+
+        // Inicializar descripción
+        updateDescription();
 
         function playTone(freq, type = 'sine', duration = 0.2) {
             if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -368,13 +376,15 @@
                         }
                         phase = 'contract';
                         timeLeft = config.contract;
-                        playTone(600, 'sine', 0.5);
+                        // Tono más agudo para indicar acción
+                        playTone(600, 'sine', 0.4);
                         updateUI('¡APRIETA!', timeLeft, currentRep, config.reps, 'contracting');
                     } else if (phase === 'contract') {
                         phase = 'relax';
                         timeLeft = config.relax;
                         currentRep++;
-                        playTone(300, 'sine', 0.5);
+                        // Tono más grave y suave para relax
+                        playTone(300, 'sine', 0.4);
                         updateUI('Relaja...', timeLeft, Math.min(currentRep, config.reps), config.reps, 'relaxing');
                     }
                 } else {
@@ -405,10 +415,11 @@
 
         function finishWorkout(levelKey) {
             stopWorkout();
-            playTone(800, 'triangle', 0.1);
-            setTimeout(() => playTone(800, 'triangle', 0.1), 150);
-            playTone(1200, 'triangle', 0.4);
-            document.getElementById('status-display').innerText = "¡Entrenamiento Completado!";
+            playTone(523.25, 'triangle', 0.1); // Do
+            setTimeout(() => playTone(659.25, 'triangle', 0.1), 150); // Mi
+            setTimeout(() => playTone(783.99, 'triangle', 0.4), 300); // Sol
+            
+            document.getElementById('status-display').innerText = "¡Completado!";
             document.getElementById('visual-circle').innerText = "✔";
             saveSession(levelKey);
         }
@@ -420,10 +431,10 @@
             document.getElementById('status-display').innerText = "Listo";
             document.getElementById('visual-circle').innerText = "0";
             document.getElementById('visual-circle').className = 'visual-cue';
-            document.getElementById('rep-display').innerText = "Repeticiones: 0 / 0";
+            document.getElementById('rep-display').innerText = "0 / 0";
         }
 
-        // --- HISTORIAL Y DATOS ---
+        // --- SISTEMA DE DATOS Y CALENDARIO ---
         function getHistory() {
             const data = localStorage.getItem('kegelHistory');
             return data ? JSON.parse(data) : {};
@@ -432,13 +443,11 @@
         function saveSession(level) {
             const history = getHistory();
             const today = new Date();
-            // Ajustar a local YYYY-MM-DD
             const offset = today.getTimezoneOffset() * 60000;
             const localISOTime = (new Date(today - offset)).toISOString().split('T')[0];
 
             if (!history[localISOTime]) history[localISOTime] = [];
             
-            // Guardamos el nivel y la hora exacta
             const timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             history[localISOTime].push({ level: level, time: timeStr });
             
@@ -447,7 +456,6 @@
             renderChart();
         }
 
-        // --- CALENDARIO ---
         function renderCalendar() {
             const date = new Date();
             const year = date.getFullYear();
@@ -459,22 +467,14 @@
             daysContainer.innerHTML = '';
             const history = getHistory();
             
-            // Calcular stats
-            let total = 0;
-            Object.values(history).forEach(dayArr => total += dayArr.length);
-            document.getElementById('total-sessions').innerText = total;
-
-            // Logica dias
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let startOffset = firstDay === 0 ? 6 : firstDay - 1;
 
-            // Espacios vacios
             for (let i = 0; i < startOffset; i++) {
                 daysContainer.appendChild(Object.assign(document.createElement('div'), {className: 'calendar-day empty'}));
             }
 
-            // Dias reales
             const todayStr = (new Date(new Date() - (new Date().getTimezoneOffset() * 60000))).toISOString().split('T')[0];
 
             for (let day = 1; day <= daysInMonth; day++) {
@@ -490,130 +490,95 @@
                 if (history[checkDate]) {
                     dayDiv.classList.add('completed');
                     dayDiv.onclick = () => openModal(checkDate, history[checkDate]);
-                    
-                    // Si hay mas de 1 sesion, mostrar puntito
                     if(history[checkDate].length > 1) {
                          const dot = document.createElement('span');
                          dot.className = 'dot';
                          dayDiv.appendChild(dot);
                     }
                 }
-
                 daysContainer.appendChild(dayDiv);
             }
         }
 
-        // --- MODAL POPUP ---
         function openModal(dateStr, sessions) {
             const modal = document.getElementById('day-modal');
             const list = document.getElementById('modal-sessions');
-            document.getElementById('modal-date').innerText = "Sesiones del " + dateStr;
+            document.getElementById('modal-date').innerText = dateStr;
             list.innerHTML = '';
 
-            // Si los datos son antiguos (solo strings) o nuevos (objetos), normalizamos
             sessions.forEach((s, index) => {
                 const item = document.createElement('div');
                 item.className = 'session-item';
-                
-                // Compatibilidad con datos antiguos si los hubiera
                 let levelCode = typeof s === 'string' ? s : s.level;
                 let timeStr = typeof s === 'object' && s.time ? s.time : `Sesión ${index + 1}`;
-                let levelName = levels[levelCode] ? levels[levelCode].name : levelCode;
+                // Fallback si el nivel antiguo no existe en los nuevos
+                let levelName = levels[levelCode] ? levels[levelCode].name : "Sesión Antigua";
 
                 item.innerHTML = `<span>${timeStr}</span> <span class="level-badge">${levelName}</span>`;
                 list.appendChild(item);
             });
-
             modal.style.display = 'flex';
         }
 
-        function closeModal(e) {
-            if (e.target.id === 'day-modal') document.getElementById('day-modal').style.display = 'none';
-        }
-        function closeModalButton() {
-             document.getElementById('day-modal').style.display = 'none';
-        }
+        function closeModal(e) { if (e.target.id === 'day-modal') document.getElementById('day-modal').style.display = 'none'; }
+        function closeModalButton() { document.getElementById('day-modal').style.display = 'none'; }
 
-        // --- GRAFICA SVG ---
         function renderChart() {
             const svg = document.getElementById('activity-chart');
-            svg.innerHTML = ''; // Limpiar
+            svg.innerHTML = ''; 
             const history = getHistory();
             const daysToShow = 14;
-            const barWidth = 15;
-            const spacing = 5;
-            const chartHeight = 120; // Espacio vertical para barras
-            const maxBarHeight = 100;
-
-            // Obtener ultimos 14 dias
+            const barWidth = 12;
+            const spacing = 8;
+            const chartHeight = 100;
+            
             const data = [];
             for (let i = daysToShow - 1; i >= 0; i--) {
                 const d = new Date();
                 d.setDate(d.getDate() - i);
                 const dateStr = (new Date(d - (d.getTimezoneOffset() * 60000))).toISOString().split('T')[0];
-                const count = history[dateStr] ? history[dateStr].length : 0;
-                // Dia del mes para etiqueta
-                data.push({ label: d.getDate(), count: count });
+                data.push({ label: d.getDate(), count: history[dateStr] ? history[dateStr].length : 0 });
             }
 
-            // Encontrar maximo para escalar
-            const maxSessions = Math.max(...data.map(d => d.count), 1); // Minimo 1 para evitar division por 0
+            const maxSessions = Math.max(...data.map(d => d.count), 2); // Escala mínima 2
 
-            // Dibujar barras
-            const startX = (300 - (daysToShow * (barWidth + spacing))) / 2; // Centrar grafica
+            const startX = (300 - (daysToShow * (barWidth + spacing))) / 2;
 
             data.forEach((d, i) => {
-                const height = (d.count / maxSessions) * maxBarHeight;
+                const height = (d.count / maxSessions) * chartHeight;
                 const x = startX + (i * (barWidth + spacing));
-                const y = chartHeight - height + 10; // +10 margen superior
+                const y = chartHeight - height;
 
-                // Barra (Rectangulo)
                 if (d.count > 0) {
                     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-                    rect.setAttribute("x", x);
-                    rect.setAttribute("y", y);
-                    rect.setAttribute("width", barWidth);
-                    rect.setAttribute("height", height);
+                    rect.setAttribute("x", x); rect.setAttribute("y", y);
+                    rect.setAttribute("width", barWidth); rect.setAttribute("height", height);
                     rect.setAttribute("class", "bar");
-                    // Tooltip nativo SVG
                     const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
                     title.textContent = `${d.count} sesiones`;
                     rect.appendChild(title);
                     svg.appendChild(rect);
                 }
 
-                // Texto (Dia)
                 const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 text.setAttribute("x", x + barWidth/2);
-                text.setAttribute("y", 145); // Abajo del todo
+                text.setAttribute("y", 120);
                 text.setAttribute("class", "bar-text");
                 text.textContent = d.label;
                 svg.appendChild(text);
             });
-            
-            // Linea base
-            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            line.setAttribute("x1", startX);
-            line.setAttribute("y1", chartHeight + 10);
-            line.setAttribute("x2", startX + (daysToShow * (barWidth + spacing)) - spacing);
-            line.setAttribute("y2", chartHeight + 10);
-            line.setAttribute("stroke", "#eee");
-            line.setAttribute("stroke-width", "1");
-            svg.appendChild(line);
         }
 
         function clearData() {
-            if(confirm("¿Seguro que quieres borrar TODO el historial? Esta acción no se puede deshacer.")) {
+            if(confirm("¿Borrar todo el historial?")) {
                 localStorage.removeItem('kegelHistory');
                 renderCalendar();
                 renderChart();
             }
         }
 
-        // Inicializar
         renderCalendar();
         renderChart();
-
     </script>
 </body>
 </html>
