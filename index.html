@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entrenador Kegel Pro</title>
+    <title>Entrenador de Suelo Pélvico - Privado y Gratuito</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -16,16 +16,37 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light);
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            margin: 0;
             color: var(--text);
+            margin: 0;
             padding: 20px;
-            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        /* --- Header Section --- */
+        header {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+        
+        h1.main-title { 
+            color: var(--primary); 
+            font-size: 2.5rem; 
+            margin-bottom: 10px; 
+            line-height: 1.2;
+        }
+        
+        p.hero-desc {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* --- App Wrapper --- */
         .main-wrapper {
             display: flex;
             gap: 20px;
@@ -33,6 +54,7 @@
             justify-content: center;
             width: 100%;
             max-width: 900px;
+            margin-bottom: 40px;
         }
 
         .container, .calendar-container {
@@ -46,184 +68,70 @@
             max-width: 400px;
         }
 
-        /* --- Tipografía y UI --- */
-        h1 { color: var(--primary); margin-bottom: 5px; margin-top: 0; font-size: 28px;}
-        h2 { font-size: 18px; color: #7f8c8d; margin-bottom: 25px; font-weight: normal; }
-        h3 { color: var(--primary); margin-top: 0; }
-        
-        /* Select mejorado */
-        .select-wrapper {
-            position: relative;
-            margin-bottom: 15px;
-        }
-        select {
-            padding: 12px;
-            font-size: 16px;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-            width: 100%;
+        /* --- Info Section (Bottom) --- */
+        .info-section {
+            max-width: 800px;
             background: white;
-            color: var(--primary);
-            font-weight: 500;
-            cursor: pointer;
-        }
-        select:focus { border-color: var(--secondary); outline: none; }
-
-        .level-desc {
-            font-size: 13px;
-            color: #666;
-            background-color: #f8f9fa;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid var(--secondary);
-            text-align: left;
-            line-height: 1.4;
-        }
-
-        /* --- Circulo Visual --- */
-        .visual-cue {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            background-color: #ecf0f1;
-            margin: 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 48px;
-            font-weight: bold;
-            color: #bdc3c7;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            border: 5px solid white;
+            padding: 30px;
+            border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            line-height: 1.6;
         }
 
-        .contracting {
-            background-color: var(--accent);
-            color: white;
-            transform: scale(1.1);
-            border-color: rgba(255,255,255,0.5);
-            box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+        .info-section h2 { color: var(--secondary); border-bottom: 2px solid #f0f0f0; padding-bottom: 10px; margin-top: 0;}
+        
+        .faq-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
         }
+        .faq-link a { color: var(--primary); text-decoration: none; font-weight: bold; border-bottom: 1px dotted var(--primary);}
+        .faq-link a:hover { color: var(--secondary); border-bottom-style: solid;}
 
-        .relaxing {
-            background-color: var(--secondary);
-            color: white;
-            transform: scale(1.0);
-            border-color: white;
-        }
+        /* --- Estilos internos de la App (Iguales que antes) --- */
+        h3 { color: var(--primary); margin-top: 0; }
+        .select-wrapper { position: relative; margin-bottom: 15px; }
+        select { padding: 12px; font-size: 16px; border-radius: 8px; border: 2px solid #e0e0e0; width: 100%; background: white; color: var(--primary); font-weight: 500; cursor: pointer; }
+        select:focus { border-color: var(--secondary); outline: none; }
+        
+        .level-desc { font-size: 13px; color: #666; background-color: #f8f9fa; padding: 10px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid var(--secondary); text-align: left; line-height: 1.4; }
+
+        .visual-cue { width: 160px; height: 160px; border-radius: 50%; background-color: #ecf0f1; margin: 20px auto; display: flex; justify-content: center; align-items: center; font-size: 48px; font-weight: bold; color: #bdc3c7; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; border: 5px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .contracting { background-color: var(--accent); color: white; transform: scale(1.1); border-color: rgba(255,255,255,0.5); box-shadow: 0 0 20px rgba(255, 107, 107, 0.4); }
+        .relaxing { background-color: var(--secondary); color: white; transform: scale(1.0); border-color: white; }
 
         .status-text { font-size: 26px; font-weight: 800; margin-bottom: 5px; min-height: 35px; color: var(--primary); }
         .sub-text { color: #95a5a6; margin-bottom: 25px; font-weight: 500;}
 
-        /* --- Botones --- */
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            width: 100%;
-            margin-bottom: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
+        button { background-color: var(--primary); color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; transition: all 0.2s; width: 100%; margin-bottom: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         button:hover { background-color: #34495e; transform: translateY(-2px); }
-        button:active { transform: translateY(0); }
         
         .stop-btn { background-color: var(--accent); display: none; }
         .stop-btn:hover { background-color: #d63031; }
+        .delete-btn { background-color: white; color: #e74c3c; border: 2px solid #e74c3c; margin-top: 20px; padding: 8px 20px; font-size: 14px; box-shadow: none; }
+        .delete-btn:hover { background-color: #fff5f5; transform: none;}
 
-        .delete-btn {
-            background-color: white;
-            color: #e74c3c;
-            border: 2px solid #e74c3c;
-            margin-top: 20px;
-            padding: 8px 20px;
-            font-size: 14px;
-            box-shadow: none;
-        }
-        .delete-btn:hover { background-color: #fff5f5; color: #c0392b; border-color: #c0392b; transform: none;}
-
-        /* --- Calendario y Gráfica --- */
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
-            text-align: center;
-        }
-
+        /* Calendario Styles */
+        .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; color: var(--primary); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
         .calendar-day-name { font-size: 11px; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px;}
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-size: 13px;
-            background-color: #f8f9fa;
-            position: relative;
-            font-weight: 500;
-        }
-
+        .calendar-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 13px; background-color: #f8f9fa; position: relative; font-weight: 500; }
         .calendar-day.today { border: 2px solid var(--primary); color: var(--primary); font-weight: bold;}
-        
-        .calendar-day.completed {
-            background-color: var(--secondary);
-            color: white;
-            cursor: pointer;
-        }
-        
+        .calendar-day.completed { background-color: var(--secondary); color: white; cursor: pointer; }
         .calendar-day.completed:hover { opacity: 0.9; transform: scale(1.05); transition: 0.2s; }
         .calendar-day.empty { background: none; }
-
-        .dot {
-            height: 4px; width: 4px; background-color: white; border-radius: 50%;
-            position: absolute; bottom: 4px;
-        }
-
-        .chart-container {
-            margin-top: 30px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-        .chart-svg { width: 100%; height: 120px; background-color: transparent; }
+        .dot { height: 4px; width: 4px; background-color: white; border-radius: 50%; position: absolute; bottom: 4px; }
+        .chart-container { margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; }
+        .chart-svg { width: 100%; height: 120px; }
         .bar { fill: var(--secondary); rx: 3; transition: height 0.6s ease; }
         .bar:hover { fill: var(--primary); }
         .bar-text { font-size: 10px; fill: #95a5a6; text-anchor: middle; }
 
-        /* --- Modal --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(44, 62, 80, 0.6);
-            display: none; justify-content: center; align-items: center;
-            z-index: 1000; backdrop-filter: blur(4px);
-        }
-
-        .modal-content {
-            background: white; padding: 25px; border-radius: 16px;
-            width: 90%; max-width: 320px; text-align: left;
-            position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            animation: slideUp 0.3s ease;
-        }
+        /* Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 62, 80, 0.6); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .modal-content { background: white; padding: 25px; border-radius: 16px; width: 90%; max-width: 320px; text-align: left; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }}
-
         .close-modal { position: absolute; top: 15px; right: 15px; font-size: 24px; cursor: pointer; color: #ccc; }
         .session-item { border-bottom: 1px solid #f1f1f1; padding: 12px 0; display: flex; justify-content: space-between; align-items: center; }
         .session-item:last-child { border-bottom: none; }
@@ -233,10 +141,14 @@
 </head>
 <body>
 
+    <header>
+        <h1 class="main-title">Tu Entrenador de Suelo Pélvico</h1>
+        <p class="hero-desc">Fortalece tu bienestar íntimo con rutinas guiadas, visuales y sonoras. Una herramienta 100% privada, gratuita y sin registros.</p>
+    </header>
+
     <div class="main-wrapper">
         <div class="container">
-            <h1>Entrenador Kegel</h1>
-            <h2>Fortalecimiento Pélvico</h2>
+            <h3>Rutina de Ejercicios</h3>
             
             <div class="select-wrapper">
                 <select id="level-select" onchange="updateDescription()">
@@ -286,6 +198,22 @@
         </div>
     </div>
 
+    <section class="info-section">
+        <h2>¿Por qué usar esta herramienta?</h2>
+        <p>
+            Tener un suelo pélvico fuerte es fundamental tanto para hombres como para mujeres, pero realizar los ejercicios correctamente (ejercicios de Kegel) requiere precisión en los tiempos.
+        </p>
+        <p>
+            Esta aplicación actúa como tu <strong>fisioterapeuta digital</strong>. Elimina la necesidad de contar mentalmente, permitiéndote concentrarte exclusivamente en la contracción y relajación del músculo. 
+            Gracias a las señales visuales y sonoras, sabrás exactamente cuándo esforzarte y cuándo descansar, asegurando que trabajas tanto las fibras de resistencia (contracciones largas) como las de reacción rápida.
+        </p>
+    </section>
+
+    <div class="faq-link">
+        ¿Tienes dudas sobre los ejercicios o la app? <br>
+        <a href="faq.html">Consulta las Preguntas Frecuentes y Guía de Uso</a>
+    </div>
+
     <div id="day-modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModalButton()">×</span>
@@ -295,33 +223,13 @@
     </div>
 
     <script>
-        // --- LOGICA DE EJERCICIOS ACTUALIZADA ---
+        // --- JAVASCRIPT LOGIC (Misma que la versión anterior) ---
         const levels = {
-            initiation: { 
-                name: "Iniciación", 
-                contract: 3, relax: 5, reps: 8, 
-                desc: "Ideal para empezar. Contracciones cortas para localizar el músculo sin fatiga." 
-            },
-            endurance1: { 
-                name: "Resistencia I", 
-                contract: 5, relax: 5, reps: 10, 
-                desc: "El estándar de oro. 5 segundos de tensión y 5 de descanso. Construye base muscular." 
-            },
-            endurance2: { 
-                name: "Resistencia II", 
-                contract: 10, relax: 10, reps: 10, 
-                desc: "Objetivo médico. Aguantar 10 segundos es signo de un suelo pélvico funcional y fuerte." 
-            },
-            quick: { 
-                name: "Fibras Rápidas", 
-                contract: 2, relax: 2, reps: 15, 
-                desc: "Contracciones explosivas de 2s. Mejora la reacción ante tos o estornudos." 
-            },
-            pro: { 
-                name: "Desafío Pro", 
-                contract: 10, relax: 5, reps: 12, 
-                desc: "Alta intensidad. 10s de trabajo con solo 5s de recuperación. Solo para expertos." 
-            }
+            initiation: { name: "Iniciación", contract: 3, relax: 5, reps: 8, desc: "Ideal para empezar. Contracciones cortas para localizar el músculo sin fatiga." },
+            endurance1: { name: "Resistencia I", contract: 5, relax: 5, reps: 10, desc: "El estándar de oro. 5 segundos de tensión y 5 de descanso. Construye base muscular." },
+            endurance2: { name: "Resistencia II", contract: 10, relax: 10, reps: 10, desc: "Objetivo médico. Aguantar 10 segundos es signo de un suelo pélvico funcional y fuerte." },
+            quick: { name: "Fibras Rápidas", contract: 2, relax: 2, reps: 15, desc: "Contracciones explosivas de 2s. Mejora la reacción ante tos o estornudos." },
+            pro: { name: "Desafío Pro", contract: 10, relax: 5, reps: 12, desc: "Alta intensidad. 10s de trabajo con solo 5s de recuperación. Solo para expertos." }
         };
 
         let interval;
@@ -332,8 +240,6 @@
             const val = document.getElementById('level-select').value;
             document.getElementById('level-desc').innerText = levels[val].desc;
         }
-
-        // Inicializar descripción
         updateDescription();
 
         function playTone(freq, type = 'sine', duration = 0.2) {
@@ -376,14 +282,12 @@
                         }
                         phase = 'contract';
                         timeLeft = config.contract;
-                        // Tono más agudo para indicar acción
                         playTone(600, 'sine', 0.4);
                         updateUI('¡APRIETA!', timeLeft, currentRep, config.reps, 'contracting');
                     } else if (phase === 'contract') {
                         phase = 'relax';
                         timeLeft = config.relax;
                         currentRep++;
-                        // Tono más grave y suave para relax
                         playTone(300, 'sine', 0.4);
                         updateUI('Relaja...', timeLeft, Math.min(currentRep, config.reps), config.reps, 'relaxing');
                     }
@@ -415,10 +319,7 @@
 
         function finishWorkout(levelKey) {
             stopWorkout();
-            playTone(523.25, 'triangle', 0.1); // Do
-            setTimeout(() => playTone(659.25, 'triangle', 0.1), 150); // Mi
-            setTimeout(() => playTone(783.99, 'triangle', 0.4), 300); // Sol
-            
+            playTone(523.25, 'triangle', 0.1); setTimeout(() => playTone(659.25, 'triangle', 0.1), 150); setTimeout(() => playTone(783.99, 'triangle', 0.4), 300);
             document.getElementById('status-display').innerText = "¡Completado!";
             document.getElementById('visual-circle').innerText = "✔";
             saveSession(levelKey);
@@ -434,86 +335,52 @@
             document.getElementById('rep-display').innerText = "0 / 0";
         }
 
-        // --- SISTEMA DE DATOS Y CALENDARIO ---
-        function getHistory() {
-            const data = localStorage.getItem('kegelHistory');
-            return data ? JSON.parse(data) : {};
-        }
-
+        function getHistory() { const data = localStorage.getItem('kegelHistory'); return data ? JSON.parse(data) : {}; }
         function saveSession(level) {
             const history = getHistory();
             const today = new Date();
             const offset = today.getTimezoneOffset() * 60000;
             const localISOTime = (new Date(today - offset)).toISOString().split('T')[0];
-
             if (!history[localISOTime]) history[localISOTime] = [];
-            
             const timeStr = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
             history[localISOTime].push({ level: level, time: timeStr });
-            
             localStorage.setItem('kegelHistory', JSON.stringify(history));
-            renderCalendar();
-            renderChart();
+            renderCalendar(); renderChart();
         }
 
         function renderCalendar() {
             const date = new Date();
-            const year = date.getFullYear();
-            const month = date.getMonth();
+            const year = date.getFullYear(); const month = date.getMonth();
             const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-            
             document.getElementById('month-year').innerText = `${monthNames[month]} ${year}`;
-            const daysContainer = document.getElementById('calendar-days');
-            daysContainer.innerHTML = '';
+            const daysContainer = document.getElementById('calendar-days'); daysContainer.innerHTML = '';
             const history = getHistory();
-            
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             let startOffset = firstDay === 0 ? 6 : firstDay - 1;
-
-            for (let i = 0; i < startOffset; i++) {
-                daysContainer.appendChild(Object.assign(document.createElement('div'), {className: 'calendar-day empty'}));
-            }
-
+            for (let i = 0; i < startOffset; i++) { daysContainer.appendChild(Object.assign(document.createElement('div'), {className: 'calendar-day empty'})); }
             const todayStr = (new Date(new Date() - (new Date().getTimezoneOffset() * 60000))).toISOString().split('T')[0];
-
             for (let day = 1; day <= daysInMonth; day++) {
-                const dayDiv = document.createElement('div');
-                dayDiv.className = 'calendar-day';
-                dayDiv.innerText = day;
-
+                const dayDiv = document.createElement('div'); dayDiv.className = 'calendar-day'; dayDiv.innerText = day;
                 const currentD = new Date(year, month, day);
                 const checkDate = (new Date(currentD - (currentD.getTimezoneOffset() * 60000))).toISOString().split('T')[0];
-
                 if (checkDate === todayStr) dayDiv.classList.add('today');
-
                 if (history[checkDate]) {
-                    dayDiv.classList.add('completed');
-                    dayDiv.onclick = () => openModal(checkDate, history[checkDate]);
-                    if(history[checkDate].length > 1) {
-                         const dot = document.createElement('span');
-                         dot.className = 'dot';
-                         dayDiv.appendChild(dot);
-                    }
+                    dayDiv.classList.add('completed'); dayDiv.onclick = () => openModal(checkDate, history[checkDate]);
+                    if(history[checkDate].length > 1) { const dot = document.createElement('span'); dot.className = 'dot'; dayDiv.appendChild(dot); }
                 }
                 daysContainer.appendChild(dayDiv);
             }
         }
 
         function openModal(dateStr, sessions) {
-            const modal = document.getElementById('day-modal');
-            const list = document.getElementById('modal-sessions');
-            document.getElementById('modal-date').innerText = dateStr;
-            list.innerHTML = '';
-
+            const modal = document.getElementById('day-modal'); const list = document.getElementById('modal-sessions');
+            document.getElementById('modal-date').innerText = dateStr; list.innerHTML = '';
             sessions.forEach((s, index) => {
-                const item = document.createElement('div');
-                item.className = 'session-item';
+                const item = document.createElement('div'); item.className = 'session-item';
                 let levelCode = typeof s === 'string' ? s : s.level;
                 let timeStr = typeof s === 'object' && s.time ? s.time : `Sesión ${index + 1}`;
-                // Fallback si el nivel antiguo no existe en los nuevos
                 let levelName = levels[levelCode] ? levels[levelCode].name : "Sesión Antigua";
-
                 item.innerHTML = `<span>${timeStr}</span> <span class="level-badge">${levelName}</span>`;
                 list.appendChild(item);
             });
@@ -524,61 +391,30 @@
         function closeModalButton() { document.getElementById('day-modal').style.display = 'none'; }
 
         function renderChart() {
-            const svg = document.getElementById('activity-chart');
-            svg.innerHTML = ''; 
-            const history = getHistory();
-            const daysToShow = 14;
-            const barWidth = 12;
-            const spacing = 8;
-            const chartHeight = 100;
-            
+            const svg = document.getElementById('activity-chart'); svg.innerHTML = ''; 
+            const history = getHistory(); const daysToShow = 14; const barWidth = 12; const spacing = 8; const chartHeight = 100;
             const data = [];
             for (let i = daysToShow - 1; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
+                const d = new Date(); d.setDate(d.getDate() - i);
                 const dateStr = (new Date(d - (d.getTimezoneOffset() * 60000))).toISOString().split('T')[0];
                 data.push({ label: d.getDate(), count: history[dateStr] ? history[dateStr].length : 0 });
             }
-
-            const maxSessions = Math.max(...data.map(d => d.count), 2); // Escala mínima 2
-
+            const maxSessions = Math.max(...data.map(d => d.count), 2);
             const startX = (300 - (daysToShow * (barWidth + spacing))) / 2;
-
             data.forEach((d, i) => {
-                const height = (d.count / maxSessions) * chartHeight;
-                const x = startX + (i * (barWidth + spacing));
-                const y = chartHeight - height;
-
+                const height = (d.count / maxSessions) * chartHeight; const x = startX + (i * (barWidth + spacing)); const y = chartHeight - height;
                 if (d.count > 0) {
                     const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-                    rect.setAttribute("x", x); rect.setAttribute("y", y);
-                    rect.setAttribute("width", barWidth); rect.setAttribute("height", height);
-                    rect.setAttribute("class", "bar");
-                    const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
-                    title.textContent = `${d.count} sesiones`;
-                    rect.appendChild(title);
-                    svg.appendChild(rect);
+                    rect.setAttribute("x", x); rect.setAttribute("y", y); rect.setAttribute("width", barWidth); rect.setAttribute("height", height); rect.setAttribute("class", "bar");
+                    const title = document.createElementNS("http://www.w3.org/2000/svg", "title"); title.textContent = `${d.count} sesiones`; rect.appendChild(title); svg.appendChild(rect);
                 }
-
                 const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                text.setAttribute("x", x + barWidth/2);
-                text.setAttribute("y", 120);
-                text.setAttribute("class", "bar-text");
-                text.textContent = d.label;
-                svg.appendChild(text);
+                text.setAttribute("x", x + barWidth/2); text.setAttribute("y", 120); text.setAttribute("class", "bar-text"); text.textContent = d.label; svg.appendChild(text);
             });
         }
 
-        function clearData() {
-            if(confirm("¿Borrar todo el historial?")) {
-                localStorage.removeItem('kegelHistory');
-                renderCalendar();
-                renderChart();
-            }
-        }
-
-        renderCalendar();
-        renderChart();
+        function clearData() { if(confirm("¿Borrar todo el historial?")) { localStorage.removeItem('kegelHistory'); renderCalendar(); renderChart(); } }
+        renderCalendar(); renderChart();
     </script>
 </body>
 </html>
