@@ -40,7 +40,7 @@
         }
         
         p.hero-desc {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #555;
             max-width: 600px;
             margin: 0 auto;
@@ -142,13 +142,13 @@
 <body>
 
     <header>
-        <h1 class="main-title">Tu Entrenador de Suelo Pélvico</h1>
-        <p class="hero-desc">Fortalece tu bienestar íntimo con rutinas guiadas, visuales y sonoras. Una herramienta 100% privada, gratuita y sin registros.</p>
+        <h1 class="main-title">Entrenador suelo pélvico</h1>
+        <p class="hero-desc">Fortalece tu suelo pélvico con rutinas guiadas, visuales y sonoras. Herramienta 100% privada, gratuita y sin registros.</p>
     </header>
 
     <div class="main-wrapper">
         <div class="container">
-            <h3>Rutina de Ejercicios</h3>
+            <h3>Rutina de ejercicios</h3>
             
             <div class="select-wrapper">
                 <select id="level-select" onchange="updateDescription()">
@@ -168,12 +168,12 @@
             <div id="status-display" class="status-text">Listo</div>
             <div id="rep-display" class="sub-text">0 / 0</div>
 
-            <button id="start-btn" onclick="startWorkout()">Comenzar Sesión</button>
+            <button id="start-btn" onclick="startWorkout()">Comenzar sesión</button>
             <button id="stop-btn" class="stop-btn" onclick="stopWorkout()">Detener</button>
         </div>
 
         <div class="calendar-container">
-            <h3>Mi Progreso</h3>
+            <h3>Mi progreso</h3>
             <div class="calendar-header">
                 <span id="month-year"></span>
             </div>
@@ -194,7 +194,7 @@
                 <svg id="activity-chart" class="chart-svg" viewBox="0 0 300 130"></svg>
             </div>
 
-            <button class="delete-btn" onclick="clearData()">Reiniciar Historial</button>
+            <button class="delete-btn" onclick="clearData()">Reiniciar historial</button>
         </div>
     </div>
 
